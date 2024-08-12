@@ -100,7 +100,7 @@ export default function Login() {
             <p>
               Don't have an account:{" "}
               <Link to={"/signup"} className=" text-indigo-500 underline">
-                sign in
+                sign up
               </Link>
             </p>
           </div>
