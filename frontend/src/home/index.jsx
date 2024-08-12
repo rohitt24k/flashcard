@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../lib/axiosInstance";
 import Card from "./card";
+import { Link } from "react-router-dom";
 
 function Home({ isAdmin = false, handleEdit, handleDelete, refetch }) {
   const [cardData, setCardData] = useState([]);
@@ -33,6 +34,14 @@ function Home({ isAdmin = false, handleEdit, handleDelete, refetch }) {
 
   return (
     <div className=" min-h-svh flex flex-col justify-center gap-2">
+      {!isAdmin && (
+        <Link
+          to={"/admin"}
+          className=" text-2xl text-indigo-400 underline absolute top-4 left-8"
+        >
+          admin page
+        </Link>
+      )}
       <div>
         {cardData?.map((c, index) => (
           <Card
