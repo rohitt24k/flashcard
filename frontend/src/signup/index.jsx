@@ -2,23 +2,25 @@ import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../lib/axiosInstance";
 import { useState } from "react";
 
-export default function Login() {
+export default function Signup() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const email = form.elements[0].value;
-    const password = form.elements[1].value;
+    const username = form.elements[0].value;
+    const email = form.elements[1].value;
+    const password = form.elements[2].value;
     setError("");
 
     try {
-      await axiosInstance.post("/auth/login", {
+      await axiosInstance.post("auth/signup", {
+        username,
         email,
         password,
       });
-      navigate("/admin");
+      navigate("/login");
     } catch (error) {
       setError(error.response?.data?.error);
     }
@@ -29,12 +31,30 @@ export default function Login() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight">
-            Sign in to access admin
+            Sign up to access admin
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6"
+              >
+                User Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-secondary px-2"
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -82,15 +102,15 @@ export default function Login() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                Sign up
               </button>
             </div>
           </form>
           <div className=" mt-2 text-right">
             <p>
-              Don't have an account:{" "}
-              <Link to={"/signup"} className=" text-indigo-500 underline">
-                sign in
+              Already have an account:{" "}
+              <Link to={"/login"} className=" text-indigo-500 underline">
+                sign up
               </Link>
             </p>
           </div>
