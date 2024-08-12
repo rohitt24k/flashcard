@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://flashcard-henna-one.vercel.app/api",
+  baseURL: "https://flashcard-backend-yxfv.onrender.com/api",
   withCredentials: true,
 });
 
