@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [loading, setIsLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -12,6 +13,7 @@ export default function Login() {
     const email = form.elements[0].value;
     const password = form.elements[1].value;
     setError("");
+    setIsLoading(true);
 
     try {
       await axiosInstance.post("/auth/login", {
@@ -21,6 +23,8 @@ export default function Login() {
       navigate("/admin");
     } catch (error) {
       setError(error.response?.data?.error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -82,7 +86,13 @@ export default function Login() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {!loading ? (
+                  "Sign in"
+                ) : (
+                  <div class="flex items-center justify-center ">
+                    <div class="loader"></div>
+                  </div>
+                )}
               </button>
             </div>
           </form>
